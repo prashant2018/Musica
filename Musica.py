@@ -1,6 +1,8 @@
 #! user/bin/python3
 import bs4,requests,pyperclip,time,os
-
+welcome = "Welcom To Musica"
+print(welcome.center(50, '='))
+print("\n\n")
 err_count = 0
 os.makedirs("Musica", exist_ok=True)
 location = ""
@@ -49,8 +51,8 @@ def scraper():
 
 while more == 'y' or more == 'Y': 
     
-    k = 0
-    s=input("Search Song\n")
+    k = 1
+    s=input("\nSearch Song :\n")
     l=s.split()
     search()
     scraper()
@@ -59,23 +61,32 @@ while more == 'y' or more == 'Y':
     if len(title) == 0:
         print('No song Found')
         continue
-
-    for i in range(min(8,len(title))):
+    print("0.Search Again")
+    for i in range(min(10,len(title))):
         print(str(k)+'. '+str(title[i].getText()))
         k=k+1
     
     ch = int(input('Enter Choice\n'))
-    song_link = song[ch].get('href')
-    location = title[ch].getText()
+    if ch==0:
+        continue
     
-    res = requests.get(song_link, stream = True)
+    song_link = song[ch-1].get('href')
+    location = title[ch-1].getText()
     
+    print("Fetching Data...")
+    try:
+          res = requests.get(song_link, stream = True)
+    except:
+          print("\nSomething Went Wrong :-( ")
+          continue      
+          
+          
     pyperclip.copy(song_link)
     
-    print("Link copied to clipboard. Starting Download")
+    print("Starting Download")
     print("\nDonwloading...")
-    
-    with open(os.path.join("Musica",location),"wb") as down_file:
+    file_name = location+".mp3"    
+    with open(os.path.join("Musica",file_name),"wb") as down_file:
     	for chunks in res.iter_content(100000):
     		down_file.write(chunks)
     
