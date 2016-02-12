@@ -2,7 +2,7 @@
 import bs4,requests,pyperclip,time,os
 
 err_count = 0
-os.makedirs("SongiFy", exist_ok=True)
+os.makedirs("Musica", exist_ok=True)
 location = ""
 while 1:
     try:
