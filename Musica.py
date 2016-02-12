@@ -75,7 +75,7 @@ while more == 'y' or more == 'Y':
     print("Link copied to clipboard. Starting Download")
     print("\nDonwloading...")
     
-    with open(os.path.join("SongiFy",location),"wb") as down_file:
+    with open(os.path.join("Musica",location),"wb") as down_file:
     	for chunks in res.iter_content(100000):
     		down_file.write(chunks)
     
